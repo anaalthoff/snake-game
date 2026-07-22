@@ -1,0 +1,71 @@
+plugins {
+
+    id 'java'
+
+    id 'application'
+
+    id 'info.solidsoft.pitest' version '1.15.0'
+
+}
+
+group = 'com.up202501706.ldts'
+
+version = '1.0-SNAPSHOT'
+
+repositories {
+
+    mavenCentral()
+
+}
+
+dependencies {
+
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+
+    testImplementation 'org.mockito:mockito-core:5.5.0'
+
+    testImplementation 'org.mockito:mockito-junit-jupiter:5.6.0'
+
+    implementation 'com.googlecode.lanterna:lanterna:3.1.1'
+
+}
+
+test {
+
+    useJUnitPlatform()
+
+}
+
+pitest {
+
+    junit5PluginVersion = '1.2.1'
+
+    pitestVersion = '1.17.1'
+
+    // Target specific packages/classes in default package
+
+    targetClasses = ['viewer.*', 'controller.*', 'model.*', 'Application']
+
+    //targetTests = ['viewer.*', 'controller.*', 'model.*']
+
+    // Exclude libraries and test classes
+
+    excludedClasses = ['com.googlecode.lanterna.*', 'org.pitest.*', 'org.junit.*', '*Test', '*Tests', 'Application', 'viewer.Viewer']
+
+    threads = 4
+
+    outputFormats = ['HTML', 'XML']
+
+    timestampedReports = false
+
+}
+
+application {
+
+    mainClass.set("Application")
+
+}
